@@ -1,15 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
+  <MenuCard 
+    store="퀴즈노스"
+    menu="블랙 앵거스"
+    price="7,000"
+    star=""
+    count="7"
+    img="./assets/example.png"
+  />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MenuCard from './components/MenuCard.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MenuCard
   }
 }
 </script>
