@@ -7,3 +7,10 @@
   padding: 0px;
   margin: 0px;
 }
+
+body {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  min-width: 1060px;
+}
