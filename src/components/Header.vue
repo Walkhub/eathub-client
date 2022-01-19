@@ -1,11 +1,5 @@
 <template>
-<header class="header"><img src="../assets/eathub.png" alt="로고" class="logo"/></header>
-<nav class="header">
-    <img src="../assets/noodletree.jpg" alt="국수나무" />
-    <img src="../assets/lotteria.png" alt="롯데리아" />
-    <img src="../assets/homebab.png" alt="정성이가능한집밥" />
-    <img src="../assets/quiznos.png" alt="퀴즈노스" />
-</nav>
+    <header class="header"><img src="../assets/eathub.png" alt="로고"/></header>
 </template>
 
 <script>
@@ -14,24 +8,16 @@ export default {
 }
 </script>
 
-<style>
+<style >
 .header {
     width: 100%;
-    height: 35px;
+    height: 50px;
     display: flex;
     justify-content: space-evenly;
-}
-.header:nth-child(1){
-    background-color: white;
-}
-.header:nth-child(2){
-    background-color: #DE1616;
-}
-.logo {
-    width: 100px;
+    background-color: #212121;
 }
 img {
-    width: 300px;
+    width: 100px;
     height: 100%;
     object-fit: contain;
 }
