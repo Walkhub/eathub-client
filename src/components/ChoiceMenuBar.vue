@@ -1,19 +1,23 @@
 <template>
     <div class="menu-bar-wrapper">
-        선택한 메뉴
+        신청된 메뉴
+        <!-- <ChoiceMenuCard v-for="(i, idx) in array(10)" :key="idex"/> -->
     </div>
 </template>
 
 <script>
+import ChoiceMenuCard from './ChoiceMenuCard.vue'
 export default {
-
+    components: {
+        ChoiceMenuCard,
+    }
 }
 </script>
 
 <style>
 .menu-bar-wrapper{
     width: 120px;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 250px);
     background-color: #DE1616;
     color: white;
     text-align: center;
@@ -24,5 +28,6 @@ export default {
     top: 170px;
     left: 100%;
     transform: translateX(-100%);
+    overflow: auto;
 }
 </style>
