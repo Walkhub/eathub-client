@@ -1,6 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Home from '../views/Home.vue'
-import MenuAddModal from '../views/MenuAddModal.vue'
 
 const User = {
     template: '<div>User</div>'
