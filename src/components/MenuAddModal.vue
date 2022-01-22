@@ -9,7 +9,8 @@
         <template v-slot:main>
             <form @submit.prevent="console.log('asd')">
                 <div class="menu-contain">
-                    <div class="menu-image"></div>
+                    <label for="image" class="menu-image" :style="`background-image : url(${imageUrl})`"/>
+                    <input ref="image" id="image" @change="uploadImg" multiple accept="image/*" type="file" class="image-input"/>
                     <select v-model="restaurant" class="menu-column">
                         <option value="res" hidden>음식점</option>
                         <option value=1>퀴즈노스</option>
@@ -49,18 +50,30 @@ export default {
             'SET_IS_ADD_MENU'
         ]),
         sendMenu() {
-            this.$sendMenu({
+            if(this.restaurant === 'res' || this.menuName === '' || this.cost === '') { alert('빈칸을 모두 채워주세요') }
+            else if(this.imageUrl === 'https://via.placeholder.com/160') { alert('이미지를 넣어주세요') }
+            else {
+                this.$sendMenu({
                 restaurantId : parseInt(this.restaurant), 
                 name: this.menuName,
                 imageUrl: this.imageUrl,
                 cost: parseInt(this.cost)
             })
+            }
+        },
+        uploadImg() {
+            var image = this.$refs['image'].files[0]
+
+            const url = URL.createObjectURL(image)
+            this.imageUrl = url
+            console.log(this.imageUrl)
         }
+
     }
 }
 </script>
 
-<style>
+<style scoped>
 .menu-add-header {
     width: 100%;
     height: 100%;
@@ -77,11 +90,13 @@ export default {
 }
 .menu-image {
     width: 160px;
-    height: 160px;
+    background-size: 160px;
+    object-fit: contain;
     margin: 0;
     background-color: #F5F5F5;
     grid-row-start: 1;
     grid-row-end: 4;
+    cursor: pointer;
 }
 .menu-column {
     width: 160px;
@@ -112,5 +127,8 @@ export default {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+.image-input {
+    display: none;
 }
 </style>
