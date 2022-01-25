@@ -1,7 +1,7 @@
 <template>
     <div class="modal-mask">
         <div class="modal-wrapper">
-            <div class="modal-contain">
+            <div class="modal-contain" :style="cssProps">
                 <div class="modal-header">
                     <slot name="header"></slot>
                 </div>
@@ -15,6 +15,15 @@
 
 <script>
 export default {
+    props: ['width', 'height'],
+    computed: {
+        cssProps() {
+            return {
+                'width': this.width,
+                'height': this.height
+            }
+        }
+    }
 
 }
 </script>
@@ -37,8 +46,6 @@ export default {
     vertical-align: middle;
 }
 .modal-contain {
-    width: 400px;
-    height: 330px;
     background-color: white;
     margin: 0px auto;
     border-radius: 8px;
