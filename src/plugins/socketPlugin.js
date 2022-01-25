@@ -23,6 +23,10 @@ const socketPlugin = {
       })
     };
 
+    app.config.globalProperties.$foodInfo = ({foodId}) => {
+      socket.emit('/food/information', { foodId })
+    };
+
     app.config.globalProperties.$socket = socket;
   }
 }
