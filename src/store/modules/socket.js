@@ -1,7 +1,8 @@
 import Constant from "../../Constant";
 
 const state = {
-    menuList: []
+    menuList: [],
+    menuInfo: {}
 }
 
 const getters = {};
@@ -14,6 +15,9 @@ const mutations = {
     },
     [Constant.PUSH_MENU_ADD]: ($state, $payload) => {
         $state.menuList.push($payload)
+    },
+    [Constant.SET_MENU_INFO]: ($state, $payload) => {
+        $state.menuInfo = $payload
     }
 }
 
