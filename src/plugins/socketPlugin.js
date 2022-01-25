@@ -27,6 +27,19 @@ const socketPlugin = {
       socket.emit('/food/information', { foodId })
     };
 
+    app.config.globalProperties.$reviewList = ({foodId}) => {
+      socket.emit('/review/list', {foodId})
+    }
+
+    app.config.globalProperties.$reviewAdd = ({foodId, score, content, user}) => {
+      socket.emit('/review/create', {
+        foodId: foodId,
+        score: score,
+        userName: user,
+        content: content
+      })
+    }
+
     app.config.globalProperties.$socket = socket;
   }
 }

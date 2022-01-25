@@ -2,7 +2,7 @@
     <div class="star-wrapper" :style="cssProps">
         <input type="range" v-model="value" :style="cssProps" min=0 max=10 :disabled="!isMove"/>
         <img src="../assets/star.png" :style="cssProps"/>
-        <input type="range" v-model="value" :style="cssProps" min=0 max=10 :disabled="!isMove"/>
+        <input @input="setStar" type="range" v-model="value" :style="cssProps" min=0 max=10 :disabled="!isMove"/>
     </div>
 </template>
 
@@ -20,6 +20,11 @@ export default {
                 'width': this.width,
                 'height': this.height
             }
+        }
+    },
+    methods: {
+        setStar(e) {
+            this.$emit('setStar', e.target.value)
         }
     }
     

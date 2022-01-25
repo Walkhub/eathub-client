@@ -35,11 +35,33 @@
                     <div class="menu-score-info">
                         <div class="menu-score-title">인기 순위</div>
                         <div class="menu-score-content">
-                            <span style="font-size:20px">{{ menuInfo.rank }}</span> / {{ menuInfo.totalCount }}
+                            <span style="font-size:20px">{{ menuInfo.rank }}</span> / {{ menuInfo.totalAmount }}
                         </div>
                     </div>
                 </div>
-                
+                <div class="review-write">
+                    <div class="review-star">
+                        <Star 
+                            :width="'100px'" 
+                            :height="'21px'" 
+                            :isMove="true" 
+                            :value="0" 
+                            @setStar="starScoreChange"
+                        />
+                    </div>
+                    <textarea v-model="reviewContent" placeholder="리뷰 입력하기" class="review-input" rows="2"/>
+                    <button class="review-btn" @click.prevent="createReview">작성 완료</button>
+                </div>
+
+                <div class="review-list">
+                    <ReviewCard 
+                        v-for="(i, index) in reviewData" :key="index"
+                        :star="i.score*2"
+                        :name="i.userName"
+                        :date="`${i.createAt[0]}년 ${i.createAt[1]}월 ${i.createAt[2]}일`"
+                        :content="i.content"
+                    />
+                </div>
             </div>
         </template>
     </ModalBase>
@@ -60,30 +82,52 @@ export default {
     data() {
         return {
             id: -1,
-            value: 0
+            reviewScore: 0,
+            reviewUser: '이재원',
+            reviewContent: ''
         }
     },
-    create() {
-        console.log(this.$route.params.id)
+    created() {
+        this.id=this.$route.params.id
     },
     computed: {
         ...mapState({
             menuInfo: (state) => state.socket.menuInfo,
+            reviewData: (state) => state.socket.reviewData
         })
     },
     mounted() {
-        this.$foodInfo({foodId: 10})
+        this.$foodInfo({foodId: this.id})
+        this.$reviewList({foodId: this.id})
+        
         this.$socket.on('food.information', (data) => {
-            console.log(data)
             this.setMenuInfo(data)
+        })
+        this.$socket.on('review.list', (data) => {
+            this.pushReviewData(data)
+        })
+        this.$socket.on('review.create', (data) => {
+            data.foodId === parseInt(this.id) ? this.pushReviewAdd(data) : null
         })
     },
     methods: {
         ...mapMutations({
-            setMenuInfo: Constant.SET_MENU_INFO
+            setMenuInfo: Constant.SET_MENU_INFO,
+            pushReviewData: Constant.PUSH_REVIEW_DATA,
+            pushReviewAdd: Constant.PUSH_REVIEW_ADD,
         }),
         starScoreChange(starScore) {
-            this.value = starScore/2
+            this.reviewScore = starScore / 2
+        },
+        createReview() {
+            this.$reviewAdd({
+                foodId: parseInt(this.id),
+                score: this.reviewScore,
+                user: this.reviewUser,
+                content: this.reviewContent
+            })
+            this.reviewScore=0
+            this.reviewContent=''
         }
     }
 }
