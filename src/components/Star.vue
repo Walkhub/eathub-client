@@ -16,15 +16,11 @@ export default {
     ],
     computed: {
         cssProps() {
-            console.log(this.width)
             return {
                 'width': this.width,
                 'height': this.height
             }
         }
-    },
-    mounted() {
-        console.log(this.value)
     }
     
 }
@@ -50,7 +46,7 @@ input[type="range"] {
 input[type="range"]:nth-child(3){
     position: absolute;
     top: 0;
-    z-index: 2000;
+    z-index: 3;
     opacity: 0;
 }
 
@@ -77,7 +73,7 @@ input[type="range"]::-webkit-slider-thumb {
 img{
     object-fit: cover;
     height: val(--heigth);
-    z-index: 1999;
+    z-index: 2;
     position: absolute;
     top: 0;
 }

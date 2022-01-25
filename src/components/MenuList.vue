@@ -5,41 +5,55 @@
                 store="음식점을 선택하고"
                 menu="메뉴를 추가하세요"
                 price="9,999,999"
-                star=""
-                count="7"
+                star="5"
                 img="https://via.placeholder.com/160"
                 @click.prevent="SET_IS_ADD_MENU(true)"
             />
         </div>
-        <div v-for="(data,idx) in 100" :key="idx" class="list-card">
+        <div v-for="(data,idx) in menuData" :key="idx" class="list-card">
             <MenuCard 
-                store="퀴즈노스"
-                menu="블랙 앵거스"
-                price="7,000"
-                star=""
-                count="7"
-                img="https://via.placeholder.com/160"
+                :store="data.restaurantName"
+                :menu="data.foodName"
+                :price="data.foodCost"
+                :star="data.foodScore"
+                :img="data.foodPicture"
             />
         </div>
     </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 import MenuCard from './MenuCard.vue'
+import Constant from '../Constant'
+
 export default {
-    data() {
-        return {
-        }
-    },
     components: {
         MenuCard,
     },
+    computed: {
+        ...mapState({
+            menuData: (state) => state.socket.menuList
+        })
+    },
+    mounted() {
+        this.$foodList()
+        this.$socket.on('food.list', (data) => {
+            this.pushMenuData(data.foods)
+        })
+        this.$socket.on('food.create', (data) => {
+            console.log(data)
+            this.pushMenuAdd({...data, foodScore: 0})
+        })
+    },
     methods: {
-        ...mapMutations([
-            'SET_IS_ADD_MENU'
-        ])
-    }
+        ...mapMutations({
+            pushMenuData: Constant.PUSH_MENU_DATA,
+            pushMenuAdd: Constant.PUSH_MENU_ADD,
+            SET_IS_ADD_MENU: 'SET_IS_ADD_MENU'
+        })
+    },
+    
 }
 </script>
 

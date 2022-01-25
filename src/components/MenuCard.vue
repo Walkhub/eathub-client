@@ -4,18 +4,19 @@
         <div class="menu-text">{{store}}</div>
         <div class="menu-text">{{menu}}</div>
         <div class="menu-price">{{price}}<span>원</span></div>
-        <div class="menu-text">☆☆☆☆☆ ({{count}})</div>
+        <div class="menu-text"><Star :width="'80px'" :height="'17px'" :isMove="false" :value="star*2"/></div>
     </div>
 </template>
 
 <script>
+import Star from './Star.vue'
 export default {
+    components: { Star },
     props: [
         'store',
         'menu',
         'price',
         'star',
-        'count',
         'img'
     ]
 }
@@ -36,6 +37,7 @@ export default {
 }
 .menu-text{
     font-size: 14px;
+    position: relative;
 }
 .menu-price{
     font-size: 20px;
