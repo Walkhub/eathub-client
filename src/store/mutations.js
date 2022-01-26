@@ -10,7 +10,14 @@ const mutations = {
             isOpen: payload.isOpen,
             foodId: payload.foodId
         }
+    },
+    PUSH_CART_OPTION (state, payload) {
+        state.cartState[payload.index].optionIds.push(payload.optionId)
+    },
+    DELETE_CART_FOOD (state, payload) {
+        state.cartState = state.cartState.filter((i) => i.foodId !== payload.foodId)
     }
+
 }
 
 export default mutations
