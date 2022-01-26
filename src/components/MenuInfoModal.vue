@@ -1,5 +1,8 @@
 <template>
     <ModalBase :width="'700px'" :height="'500px'">
+        <template v-slot:header>
+            <a @click.prevent="SET_OPEN_MENU_INFO({isOpen: false, foodId: -1})">&times;</a>
+        </template>
         <template v-slot:main>
             <div class="menu-info">
                 <div class="menu-image">
@@ -13,8 +16,7 @@
                 </div>
 
                 <div class="menu-order">
-                    <input type="number" placeholder="수량" min="1"/>
-                    <button>주문하기</button>
+                    <button @click.prevent="pushCardFood">카트에 담기</button>
                 </div>
 
                 <div class="menu-score">
@@ -68,12 +70,13 @@
 </template>
 
 <script>
-import ReviewCard from './ReviewCard.vue'
-import ModalBase from './ModalBase.vue'
-import Star from './Star.vue'
+import ReviewCard from '../components/ReviewCard.vue'
+import ModalBase from '../components/ModalBase.vue'
+import Star from '../components/Star.vue'
 import { mapMutations, mapState } from 'vuex'
 import Constant from '../Constant'
 export default {
+    props: ['foodId'],
     components: {
         ReviewCard, 
         ModalBase,
@@ -81,19 +84,19 @@ export default {
     },
     data() {
         return {
-            id: -1,
+            id: this.foodId,
             reviewScore: 0,
-            reviewUser: '이재원',
+            reviewUser: localStorage.getItem('name'),
             reviewContent: ''
         }
     },
     created() {
-        this.id=this.$route.params.id
+        console.log(this.foodId)
     },
     computed: {
         ...mapState({
             menuInfo: (state) => state.socket.menuInfo,
-            reviewData: (state) => state.socket.reviewData
+            reviewData: (state) => state.socket.reviewData.reverse()
         })
     },
     mounted() {
@@ -104,10 +107,23 @@ export default {
             this.setMenuInfo(data)
         })
         this.$socket.on('review.list', (data) => {
-            this.pushReviewData(data)
+            this.setReviewScore({
+                totalAmount: data.totalAmount,
+                rank: data.rank,
+                reviewAverage: data.reviewAverage
+            })
+            this.pushReviewData(data.reviewMessages)
+            
         })
         this.$socket.on('review.create', (data) => {
-            data.foodId === parseInt(this.id) ? this.pushReviewAdd(data) : null
+            if(data.foodId === parseInt(this.id)) {
+                this.pushReviewAdd(data)
+                    this.setReviewScore({
+                    totalAmount: data.totalAmount,
+                    rank: data.rank,
+                    reviewAverage: data.reviewAverage
+                })
+            }
         })
     },
     methods: {
@@ -115,6 +131,9 @@ export default {
             setMenuInfo: Constant.SET_MENU_INFO,
             pushReviewData: Constant.PUSH_REVIEW_DATA,
             pushReviewAdd: Constant.PUSH_REVIEW_ADD,
+            setReviewScore: Constant.SET_REVIEW_SCORE,
+            PUSH_CART_FOOD: 'PUSH_CART_FOOD',
+            SET_OPEN_MENU_INFO: 'SET_OPEN_MENU_INFO'
         }),
         starScoreChange(starScore) {
             this.reviewScore = starScore / 2
@@ -126,9 +145,19 @@ export default {
                 user: this.reviewUser,
                 content: this.reviewContent
             })
-            this.reviewScore=0
             this.reviewContent=''
+        },
+        pushCardFood() {
+            this.PUSH_CART_FOOD({
+                foodId: this.menuInfo.foodId,
+                count: 1,
+                options: [],
+                name: '한준호'
+            })
         }
+    },
+    beforeUnmount(){
+        this.$leaveFood({foodId: this.id})
     }
 }
 </script>
@@ -169,15 +198,12 @@ export default {
     display: flex;
     justify-content: space-around;
 }
-.menu-order input {
-    width: 40px;
-    outline: none;
-}
 .menu-order button {
     background-color: #AC0C0C;
     color: white;
-    width: 100px;
-    padding: 5px;
+    width: calc(100% - 30px);
+    padding: 10px;
+    font-size: 16px;
     border: none;
 }
 .menu-score{
