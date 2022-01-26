@@ -145,15 +145,21 @@ export default {
                 user: this.reviewUser,
                 content: this.reviewContent
             })
+            
             this.reviewContent=''
         },
         pushCardFood() {
+            console.log(this.id)
             this.PUSH_CART_FOOD({
-                foodId: this.menuInfo.foodId,
+                foodId: this.id,
+                foodName: this.menuInfo.name,
+                foodCost: this.menuInfo.cost,
+                restaurantName: this.menuInfo.restaurantName,
                 count: 1,
-                options: [],
-                name: '한준호'
+                optionIds: [],
             })
+
+            this.SET_OPEN_MENU_INFO({isOpen: false, foodId: -1})
         }
     },
     beforeUnmount(){
