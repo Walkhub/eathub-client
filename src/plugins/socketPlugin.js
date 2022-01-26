@@ -39,6 +39,12 @@ const socketPlugin = {
         content: content
       })
     }
+    
+    app.config.globalProperties.$leaveFood = ({foodId}) => {
+      socket.emit('/food/sign-out', {
+        foodId
+      })
+    }
 
     app.config.globalProperties.$socket = socket;
   }

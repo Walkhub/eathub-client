@@ -22,11 +22,18 @@ const mutations = {
     },
     [Constant.PUSH_REVIEW_DATA]: ($state, $payload) => {
         $state.reviewData.push(...$payload)
-        console.log($state.reviewData)
     },
     [Constant.PUSH_REVIEW_ADD]: ($state, $payload) => {
         $state.reviewData.push($payload)
     },
+    [Constant.SET_REVIEW_SCORE]: ($state, $payload) => {
+        $state.menuInfo = {
+            ...$state.menuInfo,
+            totalAmount: $payload.totalAmount,
+            rank: $payload.rank,
+            foodScore: $payload.reviewAverage
+        }
+    }
 }
 
 export default {

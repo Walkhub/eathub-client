@@ -11,13 +11,14 @@
             />
         </div>
         <div v-for="(data,idx) in menuData" :key="idx" class="list-card">
-            <MenuCard 
-                :store="data.restaurantName"
-                :menu="data.foodName"
-                :price="data.foodCost"
-                :star="data.foodScore"
-                :img="data.foodPicture"
-            />
+                <MenuCard 
+                    :store="data.restaurantName"
+                    :menu="data.foodName"
+                    :price="data.foodCost"
+                    :star="data.foodScore"
+                    :img="data.foodPicture"
+                    @click.prevent="SET_OPEN_MENU_INFO({ isOpen: true, foodId: data.foodId})"
+                />
         </div>
     </div>
 </template>
@@ -39,10 +40,10 @@ export default {
     mounted() {
         this.$foodList()
         this.$socket.on('food.list', (data) => {
+            console.log(data.foods)
             this.pushMenuData(data.foods)
         })
         this.$socket.on('food.create', (data) => {
-            console.log(data)
             this.pushMenuAdd({...data, foodScore: 0})
         })
     },
@@ -50,10 +51,10 @@ export default {
         ...mapMutations({
             pushMenuData: Constant.PUSH_MENU_DATA,
             pushMenuAdd: Constant.PUSH_MENU_ADD,
-            SET_IS_ADD_MENU: 'SET_IS_ADD_MENU'
+            SET_IS_ADD_MENU: 'SET_IS_ADD_MENU',
+            SET_OPEN_MENU_INFO: 'SET_OPEN_MENU_INFO'
         })
-    },
-    
+    }
 }
 </script>
 
