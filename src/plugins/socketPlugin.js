@@ -46,6 +46,26 @@ const socketPlugin = {
       })
     }
 
+    app.config.globalProperties.$optionsList = ({foodId}) => {
+      socket.emit('/option/list', {
+        foodId
+      })
+    }
+
+    app.config.globalProperties.$optionAdd = ({foodId, optionName, optionCost}) => {
+      socket.emit('/option/create', {
+        foodId, optionName, optionCost
+      })
+    }
+
+    app.config.globalProperties.$orderMenu = (orderList) => {
+      socket.emit('/food/application', {
+        userName: localStorage.getItem('name'),
+        applicationType: "DINNER",
+        foods: orderList
+      })
+    }
+
     app.config.globalProperties.$socket = socket;
   }
 }
