@@ -5,7 +5,7 @@
     </header>
     <section>
       <MenuList/>
-      <OrderMenu />
+      <OrderBox />
     </section>
     <aside>
       <ChoiceMenuBar/>
@@ -21,14 +21,14 @@ import { mapState } from 'vuex'
 import MenuList from '../components/MenuList.vue'
 import ChoiceMenuBar from '../components/ChoiceMenuBar.vue'
 import Header from '../components/Header.vue'
-import OrderMenu from '../components/OrderMenu.vue'
+import OrderBox from '../components/OrderBox.vue'
 import MenuAddModal from '../components/MenuAddModal.vue'
 import MenuInfoModal from '../components/MenuInfoModal.vue'
 
 export default {
   components: {
     Header,
-    OrderMenu,
+    OrderBox,
     MenuList,
     ChoiceMenuBar,
     MenuAddModal,
