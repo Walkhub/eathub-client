@@ -1,8 +1,9 @@
 <template>
-    <ModalBase>
+    <ModalBase :width="'400px'" :height="'330px'">
         <template v-slot:header>
             <div class="menu-add-header">
-                <div>title</div>
+                <div></div>
+                <div>메뉴 추가하기</div>
                 <a @click.prevent="SET_IS_ADD_MENU(false)">&times;</a>
             </div>
         </template>
@@ -80,7 +81,13 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 25px;
+    box-sizing: border-box;
+}
+.menu-add-header a{
+    font-size: 30px;
+    cursor: pointer;
 }
 .menu-contain{
     display: grid;
