@@ -78,7 +78,7 @@ const socketPlugin = {
     }
 
     app.config.globalProperties.$myOrderFood = () => {
-      socket.emit('/food/application/my', {
+      socket.emit('/food/application/mine', {
         userName: localStorage.getItem('name'),
         applicationType: isTime()
       })
