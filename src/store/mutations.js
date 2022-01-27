@@ -14,6 +14,9 @@ const mutations = {
     PUSH_CART_OPTION (state, payload) {
         state.cartState[payload.index].optionIds.push(payload.optionId)
     },
+    RESET_CART_FOOD (state) {
+        state.cartState=[]
+    },
     DELETE_CART_FOOD (state, payload) {
         state.cartState = state.cartState.filter((i) => i.foodId !== payload.foodId)
     }
