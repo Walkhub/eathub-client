@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="menu-order">
-                    <button @click.prevent="pushCardFood">카트에 담기</button>
+                    <button @click.prevent="pushCartFood">카트에 담기</button>
                 </div>
 
                 <div class="menu-score">
@@ -90,9 +90,6 @@ export default {
             reviewContent: ''
         }
     },
-    created() {
-        console.log(this.foodId)
-    },
     computed: {
         ...mapState({
             menuInfo: (state) => state.socket.menuInfo,
@@ -148,7 +145,7 @@ export default {
             
             this.reviewContent=''
         },
-        pushCardFood() {
+        pushCartFood() {
             console.log(this.id)
             this.PUSH_CART_FOOD({
                 foodId: this.id,
