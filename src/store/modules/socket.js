@@ -3,7 +3,10 @@ import Constant from "../../Constant";
 const state = {
     menuList: [],
     menuInfo: {},
-    reviewData: []
+    reviewData: [],
+    myOrderFood: [],
+    allOrderFood: {},
+    money: {},
 }
 
 const getters = {};
@@ -33,6 +36,15 @@ const mutations = {
             rank: $payload.rank,
             foodScore: $payload.reviewAverage
         }
+    },
+    [Constant.PUSH_MY_ORDER_FOOD]: ($state, $payload) => {
+        $state.myOrderFood.push(...$payload)
+    },
+    [Constant.SET_ALL_ORDER_FOOD]: ($state, $payload) => {
+        $state.allOrderFood = $payload;
+    },
+    [Constant.SET_MONEY]: ($state, $payload) => {
+        $state.money=$payload
     }
 }
 
