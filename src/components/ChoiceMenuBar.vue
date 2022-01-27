@@ -1,8 +1,11 @@
 <template>
     <div class="menu-bar-wrapper" :style="cssProps" @click.prevent="position==='-15%' ? position='-100%' : position='-15%'">
-        신청된 메뉴
+        주문한 메뉴
         <div class="menu-bar-content">
-                <ChoiceMenuCard v-for="(i, idx) in myOrderFood" :key="idx"/>
+                <ChoiceMenuCard v-for="(i, idx) in myOrderFood" 
+                    :key="idx"
+                    :data="i"
+                />
             
             <Receipt class="receipt"/>
         </div>
@@ -26,13 +29,16 @@ export default {
     },
     mounted() {
         this.$socket.on('food.application', (data) => {
-            console.log(data.foodApplications)
             this.PUSH_MY_ORDER_FOOD(data.foodApplications)
+        })
+
+        this.$myOrderFood()
+        this.$socket.on('food.application.my', (data) => {
+            this.PUSH_MY_ORDER_FOOD(data.applications)
         })
 
         this.$allOrderFood()
         this.$socket.on('food.application.list', (data) => {
-            console.log(data.foodApplications)
             this.SET_ALL_ORDER_FOOD(data.foodApplications)
         })
     },
