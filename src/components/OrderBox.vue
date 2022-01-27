@@ -2,9 +2,9 @@
     <div class="order-wrapper">
         <div class="order-title">
             장바구니
-            <div class="join-member" @click.prevent="setMemberCount">{{member}} 명</div>
+            <div class="join-member" @click.prevent="setJoin">신청하기</div>
         </div>
-        <order-card 
+        <OrderCard
             v-for="(data, idx) in cartState" 
             :key="idx"
             :data="data"
@@ -15,8 +15,8 @@
                 내가 쓴 돈
             </div>
             <div>
-                <span>7000</span>
-                / 10000 원
+                <span>{{ money.usedAmount }}</span>
+                / {{ money.amountPerPerson }} 원
             </div>
         </div>
 
@@ -25,7 +25,7 @@
                 남은 돈
             </div>
             <div>
-                <span>70000</span>
+                <span>{{ money.remainedAmount }}</span>
                 / 136000 원
             </div>
         </div>
@@ -35,28 +35,33 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+import Constant from '../Constant'
 import OrderCard from './OrderCard.vue'
 export default {
   components: { OrderCard },
   computed: {
     ...mapState({
-        cartState: 'cartState'
+        cartState: 'cartState',
+        money: (state) => state.socket.money
     }),
   },
-  data() {
-      return {
-          member: 0
-      }
+  mounted() {
+      this.$socket.on('money', (data) => {
+          this.SET_MONEY(data)
+      })
   },
   methods: {
-      orderMenu() {
-          console.log(this.cartState)
+      ...mapMutations({
+          SET_MONEY: Constant.SET_MONEY
+      }),
 
+      orderMenu() {
           this.$orderMenu(this.cartState)
       },
-      setMemberCount() {
-          this.member = prompt('몇명이 신청하나요? (숫자만)')
+
+      setJoin() {
+          this.$userApplication()
       }
   }
 }
