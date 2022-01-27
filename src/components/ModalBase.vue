@@ -55,6 +55,8 @@ export default {
     width: 100%;
     height: 56px;
     border-bottom: 1px solid #707070;
+    padding: 10px 25px;
+    box-sizing: border-box;
 }
 .modal-main {
     width: 100%;
