@@ -1,7 +1,7 @@
 <template>
     <ModalBase :width="'700px'" :height="'500px'">
         <template v-slot:header>
-            <a @click.prevent="SET_OPEN_MENU_INFO({isOpen: false, foodId: -1})">&times;</a>
+            <a class="menu-close" @click.prevent="SET_OPEN_MENU_INFO({isOpen: false, foodId: -1})">&times;</a>
         </template>
         <template v-slot:main>
             <div class="menu-info">
@@ -166,6 +166,11 @@ export default {
 </script>
 
 <style scoped>
+.menu-close{
+    font-size: 30px;
+    cursor: pointer;
+    float: right;
+}
 .menu-info {
     height: 100%;
     display: grid;
