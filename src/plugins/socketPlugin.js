@@ -2,6 +2,12 @@ import socketIO from "socket.io-client";
 
 const socket = socketIO.connect("http://211.38.86.92:8081", {transports: ['websocket']});
 
+const isTime = () => {
+  let today = new Date();   
+  let hour = today.getHours(); 
+  return hour > 14 ? 'DINNER' : 'LUNCH'
+}
+
 const socketPlugin = {
 
   install(app){
@@ -58,10 +64,30 @@ const socketPlugin = {
       })
     }
 
+    app.config.globalProperties.$userApplication = () => {
+      socket.emit('/user/application', {
+        applicationType: isTime(),
+        userName: localStorage.getItem('name')
+      })
+    }
+
+    app.config.globalProperties.$allOrderFood = () => {
+      socket.emit('/food/application/list', {
+        applicationType: isTime()
+      })
+    }
+
+    app.config.globalProperties.$myOrderFood = () => {
+      socket.emit('/food/application/my', {
+        userName: localStorage.getItem('name'),
+        applicationType: isTime()
+      })
+    }
+
     app.config.globalProperties.$orderMenu = (orderList) => {
       socket.emit('/food/application', {
         userName: localStorage.getItem('name'),
-        applicationType: "DINNER",
+        applicationType: isTime(),
         foods: orderList
       })
     }
