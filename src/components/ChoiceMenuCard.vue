@@ -1,17 +1,23 @@
 <template>
-    <img src="https://via.placeholder.com/160" alt="menu" class="choice-menu-card"/>
-    <div class="choice-menu-title">
-        병신들asdmaoidjioasjdo
+    <div class="card-wrappper">
+        <img :src="data.imageUrl" alt="menu" class="choice-menu-card"/>
+        <div class="choice-menu-title">
+            {{ data.foodName }}
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    props: ['data']
 }
 </script>
 
 <style>
+.card-wrappper{
+    width: 110px;
+    height: 110px;
+}
 .choice-menu-card {
     width: 84px;
     height: 84px;
