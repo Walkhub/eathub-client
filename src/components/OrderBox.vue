@@ -53,11 +53,13 @@ export default {
   },
   methods: {
       ...mapMutations({
-          SET_MONEY: Constant.SET_MONEY
+          SET_MONEY: Constant.SET_MONEY,
+          RESET_CART_FOOD: 'RESET_CART_FOOD'
       }),
 
       orderMenu() {
           this.$orderMenu(this.cartState)
+          this.RESET_CART_FOOD()
       },
 
       setJoin() {
