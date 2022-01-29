@@ -68,7 +68,7 @@ img {
 }
 .receipt-wrapper {
     color: black;
-    width: 300px;
+    width: 330px;
     height: calc(100% - 50px);
     background-color: white;
     box-shadow: 4px 4px 4px #00000029;
@@ -92,7 +92,7 @@ img {
     border-right: none;
 }
 .receipt-body th:nth-child(1) {
-    width: 120px;
+    width: 140px;
     
 }
 .receipt-body td {
