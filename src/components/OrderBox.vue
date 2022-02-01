@@ -62,6 +62,8 @@ export default {
       orderMenu() {
           this.$orderMenu(this.cartState)
           this.RESET_CART_FOOD()
+          this.$money()
+          this.$allOrderFood()
       },
 
       setJoin() {
