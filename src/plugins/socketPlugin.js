@@ -1,6 +1,6 @@
 import socketIO from "socket.io-client";
 
-const socket = socketIO.connect("http://211.38.86.92:8081", {transports: ['websocket']});
+const socket = socketIO.connect(`http://211.38.86.92:8081?name=${localStorage.getItem('name')}`, {transports: ['websocket']});
 
 const isTime = () => {
   let today = new Date();   
@@ -37,11 +37,10 @@ const socketPlugin = {
       socket.emit('/review/list', {foodId})
     }
 
-    app.config.globalProperties.$reviewAdd = ({foodId, score, content, user}) => {
+    app.config.globalProperties.$reviewAdd = ({foodId, score, content}) => {
       socket.emit('/review/create', {
         foodId: foodId,
         score: score,
-        userName: user,
         content: content
       })
     }
@@ -67,7 +66,12 @@ const socketPlugin = {
     app.config.globalProperties.$userApplication = () => {
       socket.emit('/user/application', {
         applicationType: isTime(),
-        userName: localStorage.getItem('name')
+      })
+    }
+
+    app.config.globalProperties.$money = () => {
+      socket.emit('/money', {
+        applicationType: isTime(),
       })
     }
 
@@ -79,14 +83,12 @@ const socketPlugin = {
 
     app.config.globalProperties.$myOrderFood = () => {
       socket.emit('/food/application/mine', {
-        userName: localStorage.getItem('name'),
         applicationType: isTime()
       })
     }
 
     app.config.globalProperties.$orderMenu = (orderList) => {
       socket.emit('/food/application', {
-        userName: localStorage.getItem('name'),
         applicationType: isTime(),
         foods: orderList
       })
