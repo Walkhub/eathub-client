@@ -86,7 +86,6 @@ export default {
         return {
             id: this.foodId,
             reviewScore: 0,
-            reviewUser: localStorage.getItem('name'),
             reviewContent: ''
         }
     },
@@ -139,7 +138,6 @@ export default {
             this.$reviewAdd({
                 foodId: parseInt(this.id),
                 score: this.reviewScore,
-                user: this.reviewUser,
                 content: this.reviewContent
             })
             
