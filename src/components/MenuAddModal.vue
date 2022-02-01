@@ -10,8 +10,8 @@
         <template v-slot:main>
             <form @submit.prevent="console.log('asd')">
                 <div class="menu-contain">
-                    <label for="image" class="menu-image" :style="`background-image : url(${imageUrl})`"/>
-                    <input ref="image" id="image" @change="uploadImg" multiple accept="image/*" type="file" class="image-input"/>
+                    <label for="images" class="menu-image" :style="`background-image : url(${imageUrl})`"/>
+                    <input ref="images" id="images" name="images" @change="uploadImg" multiple accept="image/*" type="file" class="image-input"/>
                     <select v-model="restaurant" class="menu-column">
                         <option value="res" hidden>음식점</option>
                         <option value=1>퀴즈노스</option>
@@ -33,6 +33,7 @@
 <script>
 import ModalBase from './ModalBase.vue'
 import { mapMutations } from 'vuex'
+import axios from 'axios'
 
 export default {
     components: {
@@ -44,6 +45,7 @@ export default {
             menuName: '',
             cost: '',
             imageUrl: 'https://via.placeholder.com/160',
+            imageData: ''
         }
     },
     methods: {
@@ -63,12 +65,26 @@ export default {
                 this.SET_IS_ADD_MENU(false)
             }
         },
-        uploadImg() {
-            var image = this.$refs['image'].files[0]
+        uploadImg(e) {
+            this.imageData=e.target.files[0]
+            
+            const formData = new FormData();
+            formData.append('image', this.imageData, this.imageData.name);
 
-            const url = URL.createObjectURL(image)
-            this.imageUrl = url
-            console.log(this.imageUrl)
+            axios({
+                url: 'http://211.38.86.92:8080/image',
+                method: 'post',
+                data: formData,
+                headers : {
+                    Authorization: 'Bearer asdasd',
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then((res) => {
+                console.log(res)
+            }).catch((err) => {
+                console.log(err)
+            })
+
         }
 
     }
