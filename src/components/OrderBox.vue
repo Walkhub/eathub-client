@@ -47,6 +47,8 @@ export default {
     }),
   },
   mounted() {
+      this.$money()
+
       this.$socket.on('money', (data) => {
           this.SET_MONEY(data)
       })
