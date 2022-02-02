@@ -67,7 +67,7 @@ export default {
         },
         uploadImg(e) {
             this.imageData=e.target.files[0]
-            
+
             const formData = new FormData();
             formData.append('image', this.imageData, this.imageData.name);
 
@@ -80,7 +80,7 @@ export default {
                     "Content-Type": "multipart/form-data"
                 }
             }).then((res) => {
-                console.log(res)
+                this.imageUrl = res.data
             }).catch((err) => {
                 console.log(err)
             })
