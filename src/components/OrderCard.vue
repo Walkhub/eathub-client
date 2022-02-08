@@ -1,7 +1,7 @@
 <template>
     <div class="order-card-wrapper">
         <div class="order-card-info">
-            <img class="choice-image" src="https://via.placeholder.com/160" alt="선택된 메뉴"/>
+            <img class="choice-image" :src="data.imageUrl" alt="선택된 메뉴"/>
             <div>
                 <span>{{data.restaurantName}}</span>
                 <span>{{data.foodName}}</span>
