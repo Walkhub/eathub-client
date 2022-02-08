@@ -20,7 +20,7 @@
         </div>
         
         <div class="order-setting">
-            <input type="number" v-model="count"/>
+            <input type="number" v-model="count" @change="countChange"/>
             <div>{{totalCost}}</div>
             <div @click.prevent="deleteFoodCard">&times;</div>
         </div>
@@ -86,6 +86,13 @@ export default {
         },
         deleteFoodCard() {
             this.DELETE_CART_FOOD({foodId: this.data.foodId})
+        },
+        countChange() {
+            if(this.count < 1) return  this.count = 1;
+            var index = this.cartState.findIndex((i) => {
+                return i.foodId == this.data.foodId
+            })
+            this.cartState[index].count = this.count
         }
     }
 }
