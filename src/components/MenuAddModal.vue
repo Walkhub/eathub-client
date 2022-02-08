@@ -54,7 +54,7 @@ export default {
         ]),
         sendMenu() {
             if(this.restaurant === 'res' || this.menuName === '' || this.cost === '') { alert('빈칸을 모두 채워주세요') }
-            // else if(this.imageUrl === 'https://via.placeholder.com/160') { alert('이미지를 넣어주세요') }
+            else if(this.imageUrl === 'https://via.placeholder.com/160') { alert('이미지를 넣어주세요') }
             else {
                 this.$foodAdd({
                     restaurantId : parseInt(this.restaurant), 
