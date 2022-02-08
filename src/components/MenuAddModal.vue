@@ -69,17 +69,17 @@ export default {
             this.imageData=e.target.files[0]
 
             const formData = new FormData();
-            formData.append('image', this.imageData, this.imageData.name);
+            formData.append('images', this.imageData, this.imageData.name);
 
             axios({
-                url: 'http://211.38.86.92:8080/image',
+                url: 'http://211.38.86.92:8080/images',
                 method: 'post',
                 data: formData,
                 headers : {
                     "Content-Type": "multipart/form-data"
                 }
             }).then((res) => {
-                this.imageUrl = res.data
+                this.imageUrl = res.data.image_url
             }).catch((err) => {
                 console.log(err)
             })
