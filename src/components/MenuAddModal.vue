@@ -53,13 +53,12 @@ export default {
             'SET_IS_ADD_MENU'
         ]),
         sendMenu() {
-            if(this.restaurant === 'res' || this.menuName === '' || this.cost === '') { alert('빈칸을 모두 채워주세요') }
-            else if(this.imageUrl === 'https://via.placeholder.com/160') { alert('이미지를 넣어주세요') }
+            if(this.restaurant === 'res' || this.menuName === '' || this.cost === '' || this.imageUrl === 'https://via.placeholder.com/160') { alert('빈칸 또는 이미지를 채워주세요') }
             else {
                 this.$foodAdd({
                     restaurantId : parseInt(this.restaurant), 
                     name: this.menuName,
-                    imageUrl: this.imageUrl,
+                    imageUrl: this.imageUrl[0],
                     cost: parseInt(this.cost)
                 })
                 this.SET_IS_ADD_MENU(false)
