@@ -6,7 +6,7 @@
         <template v-slot:main>
             <div class="menu-info">
                 <div class="menu-image">
-                    <img src="https://via.placeholder.com/180" class="menu-image"/>
+                    <img :src="menuInfo.imageUrl" class="menu-image"/>
                 </div>
 
                 <div class="menu-contents">
@@ -144,9 +144,9 @@ export default {
             this.reviewContent=''
         },
         pushCartFood() {
-            console.log(this.id)
             this.PUSH_CART_FOOD({
                 foodId: this.id,
+                imageUrl: this.menuInfo.imageUrl,
                 foodName: this.menuInfo.name,
                 foodCost: this.menuInfo.cost,
                 restaurantName: this.menuInfo.restaurantName,
@@ -180,7 +180,7 @@ export default {
 .menu-image {
     width: 180px;
     height: 180px;
-    object-fit: cover;
+    object-fit: contain;
     grid-row: 1 / 4;
     grid-column: 1 / 2;
     margin: 0;
