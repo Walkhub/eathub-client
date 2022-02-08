@@ -25,9 +25,9 @@
                 </tr>
 
                 <tr v-for="f in i.options" :key="f.optionId">
-                    <td>#-{{f.optionName}}</td>
+                    <td>--{{f.optionName}}</td>
                     <td>{{f.optionCost}}</td>
-                    <td>1</td>
+                    <td></td>
                     <td>{{f.optionCost}}</td>
                 </tr>
             </tbody>
