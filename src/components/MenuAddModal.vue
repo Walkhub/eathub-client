@@ -76,7 +76,6 @@ export default {
                 method: 'post',
                 data: formData,
                 headers : {
-                    Authorization: 'Bearer asdasd',
                     "Content-Type": "multipart/form-data"
                 }
             }).then((res) => {
